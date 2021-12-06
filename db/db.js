@@ -2,7 +2,7 @@ const inquirer = require("inquirer");
 const mysql = require("mysql2");
 const fs = require("fs");
 
-const CREDENTIALS_JSON_PATH = "./dbcredentials.json";
+const CREDENTIALS_JSON_PATH = "./db/dbcredentials.json";
 
 const connect = async () => {
   const { user, password } = getSavedCredentials();
@@ -22,7 +22,7 @@ const getSavedCredentials = () => {
     return JSON.parse(credentialsString);
   } catch (err) {
     console.log(`No saved password found!`);
-    return;
+    return {};
   }
 };
 
@@ -41,7 +41,11 @@ const promptUserForUserNamePassword = async () => {
     },
   ]);
   const { user, password } = responses;
-  const db = connectToSQL(user, password);
+  writeToCredentialsRecord(responses);
+  return connectToSQL(user, password);
+};
+
+const writeToCredentialsRecord = (responses) => {
   fs.writeFileSync(
     CREDENTIALS_JSON_PATH,
     JSON.stringify(responses),
@@ -50,8 +54,7 @@ const promptUserForUserNamePassword = async () => {
       if (err) return console.log(err);
     }
   );
-  return connectToSQL(user, password);
-};
+}
 
 const connectToSQL = (user, password) => {
   const db = mysql.createConnection({
