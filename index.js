@@ -6,9 +6,9 @@ const connect = require("./db");
 var db;
 
 const ALL_CLASSES = {
-  Employee: require("./classes/Employee"),
-  Role: require("./classes/Role"),
-  Department: require("./classes/Department")
+  Employee: require("./lib/Employee"),
+  Role: require("./lib/Role"),
+  Department: require("./lib/Department")
 };
 
 const MAIN_MENU = {

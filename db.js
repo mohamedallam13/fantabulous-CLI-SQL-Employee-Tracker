@@ -57,9 +57,9 @@ const connectToSQL = (user, password) => {
   const db = mysql.createConnection({
     host: "localhost",
     // MySQL username,
-    user: user, //'root'
+    user: user,
     // MySQL password
-    password: password, // 'rickandmorty13'
+    password: password,
     database: "employees_db",
   });
   console.log(`Connected to the employees_db database.`);
