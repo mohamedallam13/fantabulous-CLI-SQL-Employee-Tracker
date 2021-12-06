@@ -52,7 +52,7 @@ const getQueryCallBack = (err, results) => {
     console.log(err)
     return;
   }
-  console.log(data);
+  // console.log(data);
   return results;
 }
 
@@ -69,16 +69,40 @@ const runMainMenu = () => {
       return;
     } else {
       fulfillRequest(request);
-      runMainMenu();
     }
   });
 };
 
-function fulfillRequest(request) {
+const fulfillRequest = (request) => {
   const { className, method } = MAIN_MENU[request];
   const targetClass = new ALL_CLASSES[className](db)
-  targetClass[method](getQueryCallBack);
+  targetClass[method](runMainMenu);
 }
 
+
+
+
+// let conn;
+// const callTestQuery = () => {
+//   conn = mysql.createConnection({
+//     host: "localhost",
+//     // MySQL username,
+//     user: "root",
+//     // MySQL password
+//     password: "rickandmorty13",
+//     database: "employees_db",
+//   }).promise();
+
+//   const result = conn.execute("select * from departments");
+//   conn.end();
+//   return result;
+// }
+
+// const demoTest = ()  => {
+//   callTestQuery().then((results) => console.log(results))
+//   .catch(err => console.log(err));
+// }
+// demoTest();
+//callTestQuery();
 
 main();
