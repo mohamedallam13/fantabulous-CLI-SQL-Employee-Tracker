@@ -13,13 +13,13 @@ const ALL_CLASSES = {
 };
 
 const MAIN_MENU = {
-  'View Employees': { className: 'Employee', method: 'getInfo' },
-  // 'Add Employee': { className: 'Employee', method: 'add' },
+  // 'View Employees': { className: 'Employee', method: 'getInfo', callBack: queryCallBack },
+  // 'Add Employee': { className: 'Employee', method: 'add', callBack: addCallBack },
   // 'Update Employee Role': { className: 'Employee', method: 'update' },
-  'View All Roles': { className: 'Role', method: 'getInfo' },
-  // 'Add Role': { className: 'Role', method: 'add' },
-  'View All Departments': { className: 'Department', method: 'getInfo' },
-  // 'Add Department': { className: 'Department', method: 'add' },
+  'View All Roles': { className: 'Role', method: 'getInfo', callBack: queryCallBack },
+  // 'Add Role': { className: 'Role', method: 'add', callBack: addCallBack },
+  'View All Departments': { className: 'Department', method: 'getInfo', callBack: queryCallBack },
+  'Add Department': { className: 'Department', method: 'add', callBack: addCallBack },
   // 'Quit': {}
 };
 
@@ -38,26 +38,36 @@ const QUESTIONS = [
   }
 ];
 
+
 const main = () => {
-  console.log(figlet.textSync('Employee\nManager\n', { horizontalLayout: 'full' }));
+  displayWelcome();
   connect().then((conn) => {
-    console.log("Hello!");
+    console.log("Hello!\n");
     db = conn;
     runMainMenu();
   });
 };
 
-const getQueryCallBack = (err, results) => {
+const displayWelcome = () => {
+  console.log("-----------------------------------------------------------------")
+  console.log(figlet.textSync('Employee\nManager\n', { horizontalLayout: 'full' }));
+  console.log("-----------------------------------------------------------------")
+  console.log("-------------------copyright (c) 1993 IBM------------------------")
+  console.log("\n")
+}
+
+const queryCallBack = (err, results) => {
   if (err) {
     console.log(err)
     return;
   }
-  // console.log(data);
-  return results;
+  console.log('\n');
+  console.table(results);
+  runMainMenu();
 }
 
 const addCallBack = () => {
-
+  console.log()
 }
 
 const runMainMenu = () => {
@@ -76,7 +86,7 @@ const runMainMenu = () => {
 const fulfillRequest = (request) => {
   const { className, method } = MAIN_MENU[request];
   const targetClass = new ALL_CLASSES[className](db)
-  targetClass[method](runMainMenu);
+  targetClass[method](queryCallBack);
 }
 
 

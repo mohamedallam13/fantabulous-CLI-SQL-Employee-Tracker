@@ -1,3 +1,5 @@
+USE employees_db;
+
 INSERT INTO
     departments (name)
 VALUES
