@@ -14,7 +14,7 @@ const ALL_CLASSES = {
 
 const MAIN_MENU = {
   // 'View Employees': { className: 'Employee', method: 'getInfo', callBack: infoCallBack },
-  // 'Add Employee': { className: 'Employee', method: 'add', callBack: putCallBack },
+  'Add Employee': { className: 'Employee', method: 'add', callBack: putCallBack },
   // 'Update Employee Role': { className: 'Employee', method: 'update' },
   'View All Roles': { className: 'Role', method: 'getInfo', callBack: infoCallBack },
   'Add Role': { className: 'Role', method: 'add', callBack: putCallBack },
