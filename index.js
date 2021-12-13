@@ -16,10 +16,11 @@ const MAIN_MENU = {
   // 'View Employees': { className: 'Employee', method: 'getInfo', callBack: queryCallBack },
   // 'Add Employee': { className: 'Employee', method: 'add', callBack: addCallBack },
   // 'Update Employee Role': { className: 'Employee', method: 'update' },
-  'View All Roles': { className: 'Role', method: 'getInfo', callBack: queryCallBack },
-  // 'Add Role': { className: 'Role', method: 'add', callBack: addCallBack },
-  'View All Departments': { className: 'Department', method: 'getInfo', callBack: queryCallBack },
-  'Add Department': { className: 'Department', method: 'add', callBack: addCallBack },
+  // 'View All Roles': { className: 'Role', method: 'getInfo', callBack: queryCallBack },
+  'Add Role': { className: 'Role', method: 'add', callBack: addCallBack },
+  'View All Departments': { className: 'Department', method: 'getInfo', callBack: infoCallBack },
+  'Add Department': { className: 'Department', method: 'add', callBack: putCallBack },
+  // 'Delete Department': { className: 'Department', method: 'delete', callBack: putCallBack },
   // 'Quit': {}
 };
 
@@ -56,37 +57,56 @@ const displayWelcome = () => {
   console.log("\n")
 }
 
-const queryCallBack = (err, results) => {
-  if (err) {
-    console.log(err)
-    return;
-  }
-  console.log('\n');
-  console.table(results);
-  runMainMenu();
-}
-
-const addCallBack = () => {
-  console.log()
-}
-
-const runMainMenu = () => {
-  inquirer.prompt(QUESTIONS).then((responses) => {
-    const { request, confirm_quit } = responses;
-    if (confirm_quit) {
-      console.log("Good Bye!");
-      db.end();
-      return;
-    } else {
-      fulfillRequest(request);
-    }
+function infoCallBack(methodReturn) {
+  const { promise } = methodReturn;
+  promise.then(([rows]) => {
+    console.table(rows);
+    runMainMenu();
+  }).catch((e) => {
+    console.log(e);
+    runMainMenu();
   });
+}
+
+function putCallBack(methodReturn) {
+  const { promise, targetClass, message } = methodReturn;
+  promise.then(info => {
+    console.log(`\n${message}`);
+    targetClass.getInfo().promise.then(([rows]) => {
+      console.table(rows);
+      runMainMenu();
+    }).catch((e) => {
+      console.log(e);
+      runMainMenu();
+    });
+  }).catch((e) => {
+    console.log(e);
+    runMainMenu();
+  });
+
+
+}
+
+const runMainMenu = async () => {
+  const responses = await inquirer.prompt(QUESTIONS)
+  const { request, confirm_quit } = responses;
+  if (confirm_quit) {
+    console.log("Good Bye!");
+    db.end();
+    return;
+  } else {
+    const methodReturn = await fulfillRequest(request);
+    methodReturn.callBack(methodReturn);
+  }
 };
 
-const fulfillRequest = (request) => {
-  const { className, method } = MAIN_MENU[request];
+const fulfillRequest = async (request) => {
+  const { className, method, callBack, params } = MAIN_MENU[request];
   const targetClass = new ALL_CLASSES[className](db)
-  targetClass[method](queryCallBack);
+  const methodReturn = await targetClass[method](params);
+  methodReturn.targetClass = targetClass;
+  methodReturn.callBack = callBack;
+  return methodReturn;
 }
 
 
