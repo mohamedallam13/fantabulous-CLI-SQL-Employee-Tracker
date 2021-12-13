@@ -110,29 +110,4 @@ const fulfillRequest = async (request) => {
 }
 
 
-
-
-// let conn;
-// const callTestQuery = () => {
-//   conn = mysql.createConnection({
-//     host: "localhost",
-//     // MySQL username,
-//     user: "root",
-//     // MySQL password
-//     password: "rickandmorty13",
-//     database: "employees_db",
-//   }).promise();
-
-//   const result = conn.execute("select * from departments");
-//   conn.end();
-//   return result;
-// }
-
-// const demoTest = ()  => {
-//   callTestQuery().then((results) => console.log(results))
-//   .catch(err => console.log(err));
-// }
-// demoTest();
-//callTestQuery();
-
 main();
