@@ -53,7 +53,7 @@ const displayWelcome = () => {
   console.log("-----------------------------------------------------------------")
   console.log(figlet.textSync('Employee\nManager\n', { horizontalLayout: 'full' }));
   console.log("-----------------------------------------------------------------")
-  console.log("-------------------copyright (c) 1993 IBM------------------------")
+  console.log("-------------------copyright (c) 1983 IBM------------------------")
   console.log("\n")
 }
 
@@ -71,7 +71,7 @@ function infoCallBack(methodReturn) {
 function putCallBack(methodReturn) {
   const { promise, targetClass, message } = methodReturn;
   promise.then(info => {
-    console.log(`\n${message}`);
+    console.log(`\n${message}\n`);
     targetClass.getInfo().promise.then(([rows]) => {
       console.table(rows);
       runMainMenu();
