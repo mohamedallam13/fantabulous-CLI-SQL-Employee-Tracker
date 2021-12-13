@@ -13,12 +13,12 @@ const ALL_CLASSES = {
 };
 
 const MAIN_MENU = {
-  // 'View Employees': { className: 'Employee', method: 'getInfo', callBack: queryCallBack },
-  // 'Add Employee': { className: 'Employee', method: 'add', callBack: addCallBack },
+  // 'View Employees': { className: 'Employee', method: 'getInfo', callBack: infoCallBack },
+  // 'Add Employee': { className: 'Employee', method: 'add', callBack: putCallBack },
   // 'Update Employee Role': { className: 'Employee', method: 'update' },
-  // 'View All Roles': { className: 'Role', method: 'getInfo', callBack: queryCallBack },
-  'Add Role': { className: 'Role', method: 'add', callBack: addCallBack },
-  'View All Departments': { className: 'Department', method: 'getInfo', callBack: infoCallBack },
+  'View All Roles': { className: 'Role', method: 'getInfo', callBack: infoCallBack },
+  'Add Role': { className: 'Role', method: 'add', callBack: putCallBack },
+  // 'View All Departments': { className: 'Department', method: 'getInfo', callBack: infoCallBack },
   'Add Department': { className: 'Department', method: 'add', callBack: putCallBack },
   // 'Delete Department': { className: 'Department', method: 'delete', callBack: putCallBack },
   // 'Quit': {}
@@ -83,8 +83,6 @@ function putCallBack(methodReturn) {
     console.log(e);
     runMainMenu();
   });
-
-
 }
 
 const runMainMenu = async () => {
@@ -101,7 +99,7 @@ const runMainMenu = async () => {
 };
 
 const fulfillRequest = async (request) => {
-  const { className, method, callBack, params } = MAIN_MENU[request];
+  const { className, method, callBack, params = {} } = MAIN_MENU[request];
   const targetClass = new ALL_CLASSES[className](db)
   const methodReturn = await targetClass[method](params);
   methodReturn.targetClass = targetClass;
