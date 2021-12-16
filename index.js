@@ -14,7 +14,9 @@ const ALL_CLASSES = {
 
 const MAIN_MENU = {
   'View All Employees': { className: 'Employee', method: 'getInfo', callBack: infoCallBack },
+  'View Salaries By Department': { className: 'Department', method: 'getSalariesByDepartment', callBack: infoCallBack },
   'View Employees By Department': { className: 'Employee', method: 'getEmployeesByDeparment', callBack: infoCallBack },
+  'View Employees By Manager': { className: 'Employee', method: 'getEmployeesByManager', callBack: infoCallBack },
   'Add Employee': { className: 'Employee', method: 'add', callBack: putCallBack },
   'Update Employee Role': { className: 'Employee', method: 'updateRole' , callBack: putCallBack },
   'View All Roles': { className: 'Role', method: 'getInfo', callBack: infoCallBack },
@@ -106,7 +108,7 @@ const runMainMenu = async () => {
 };
 
 const fulfillRequest = async (request) => {
-  const { className, method, callBack, params = {} } = MAIN_MENU[request];
+  const { className, method, callBack, params} = MAIN_MENU[request];
   const targetClass = new ALL_CLASSES[className](db)
   const methodReturn = await targetClass[method](params);
   methodReturn.targetClass = targetClass;
