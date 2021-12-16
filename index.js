@@ -13,15 +13,18 @@ const ALL_CLASSES = {
 };
 
 const MAIN_MENU = {
-  // 'View Employees': { className: 'Employee', method: 'getInfo', callBack: infoCallBack },
+  'View All Employees': { className: 'Employee', method: 'getInfo', callBack: infoCallBack },
+  'View Employees By Department': { className: 'Employee', method: 'getEmployeesByDeparment', callBack: infoCallBack },
   'Add Employee': { className: 'Employee', method: 'add', callBack: putCallBack },
-  // 'Update Employee Role': { className: 'Employee', method: 'update' },
+  'Update Employee Role': { className: 'Employee', method: 'updateRole' , callBack: putCallBack },
   'View All Roles': { className: 'Role', method: 'getInfo', callBack: infoCallBack },
   'Add Role': { className: 'Role', method: 'add', callBack: putCallBack },
-  // 'View All Departments': { className: 'Department', method: 'getInfo', callBack: infoCallBack },
+  'View All Departments': { className: 'Department', method: 'getInfo', callBack: infoCallBack },
   'Add Department': { className: 'Department', method: 'add', callBack: putCallBack },
-  // 'Delete Department': { className: 'Department', method: 'delete', callBack: putCallBack },
-  // 'Quit': {}
+  'Delete Employee': { className: 'Employee', method: 'delete', callBack: putCallBack },
+  'Delete Role': { className: 'Role', method: 'delete', callBack: putCallBack },
+  'Delete Department': { className: 'Department', method: 'delete', callBack: putCallBack },
+  'Quit': {}
 };
 
 const QUESTIONS = [
@@ -70,8 +73,12 @@ function infoCallBack(methodReturn) {
 
 function putCallBack(methodReturn) {
   const { promise, targetClass, message } = methodReturn;
+  if (!promise) runMainMenu();
+
   promise.then(info => {
     console.log(`\n${message}\n`);
+    if (!targetClass) runMainMenu();
+
     targetClass.getInfo().promise.then(([rows]) => {
       console.table(rows);
       runMainMenu();
