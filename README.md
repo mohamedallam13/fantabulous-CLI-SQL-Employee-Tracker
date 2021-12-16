@@ -2,7 +2,7 @@
 A CLI application that tracks employees' info from an SQL database.
 
 
-![Product screenshot](./screenshots/screenshot1.jpg)
+![Product screenshot](./screenshots/screenshot1.png)
 
 ## Table of Contents
 
