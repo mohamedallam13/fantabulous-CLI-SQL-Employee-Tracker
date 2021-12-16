@@ -10,7 +10,6 @@ A CLI application that tracks employees' info from an SQL database.
 * [Installation](#installation)
 * [Feature](#feature)
 * [Usage](#usage)
-* [Testing](#testing)
 * [License](#license)
 * [Questions](#questions)
 * [Screens](#screens)
@@ -48,11 +47,6 @@ npm i
 
 Unrestricted usage.
 
-## Testing
-
-```
-npm run test
-```
 
 ## License 
 
