@@ -39,6 +39,7 @@ npm i
 ## Features
 
 * Easy to use application, intutive journey
+* A file that stores the logins of the SQL DB is used in order not to have to login each time, only once in case the file is empty
 * Add, delete and update employees, roles and departments
 * Display all Employees, roles and departments
 * Display aggregate salaries by department, as well as employees by managers
